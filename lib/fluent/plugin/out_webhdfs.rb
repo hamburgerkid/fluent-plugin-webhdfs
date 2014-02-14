@@ -16,6 +16,10 @@ class Fluent::WebHDFSOutput < Fluent::TimeSlicedOutput
 
   config_param :ignore_start_check_error, :bool, :default => false
 
+  config_param :auth_type, :string, :default => nil
+  config_param :keytab, :string, :default => nil
+  config_param :pass, :string, :default => nil
+
   include Fluent::Mixin::ConfigPlaceholders
 
   config_param :path, :string
@@ -105,6 +109,16 @@ class Fluent::WebHDFSOutput < Fluent::TimeSlicedOutput
 
   def prepare_client(host, port, username)
     client = WebHDFS::Client.new(host, port, username)
+    if @auth_type.to_sym == :kerberos
+      client.auth_type = :kerberos
+      if @keytab
+        client.keytab = @keytab
+      elsif @pass
+        client.pass = @pass
+      else
+        raise Fluent::ConfigError, "kerberos authentication requires keytab or password"
+      end
+    end
     if @httpfs
       client.httpfs_mode = true
     end

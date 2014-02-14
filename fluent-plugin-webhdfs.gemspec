@@ -18,6 +18,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake"
   gem.add_runtime_dependency "fluentd"
   gem.add_runtime_dependency "fluent-mixin-plaintextformatter", '>= 0.2.1'
-  gem.add_runtime_dependency "fluent-mixin-config-placeholders", "~> 0.2.0"
-  gem.add_runtime_dependency "webhdfs", '>= 0.5.3'
+  gem.add_runtime_dependency "fluent-mixin-config-placeholders", '~> 0.2.0'
+  gem.add_runtime_dependency "webhdfs-with-krb5", '>= 0.6.2'
 end
